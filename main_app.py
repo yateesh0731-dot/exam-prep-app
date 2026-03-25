@@ -1,38 +1,40 @@
 import streamlit as st
 import os
 
-st.set_page_config(page_title="SSC & UPSC Vault", page_icon="📑", layout="wide")
+st.set_page_config(page_title="Study Vault 2026", page_icon="📚", layout="wide")
 
-st.title("📚 Combined Study Vault 2026")
+# Sidebar - Subject Selection
+st.sidebar.title("📑 Subjects")
+subject = st.sidebar.selectbox("Choose a Subject", ["Polity", "Maths", "History", "Economy"])
 
-# 1. Select Main Subject
-subject = st.sidebar.selectbox("Select Subject", ["Polity", "Maths", "History", "Economy"])
+# Sidebar - Subtopic Selection
+st.sidebar.divider()
+st.sidebar.write(f"**{subject} Topics:**")
 
-# 2. Define Subtopics for each Subject
 if subject == "Polity":
-    subtopic = st.sidebar.radio("Topic", ["President of India", "Fundamental Rights", "Fundamental Duties"])
-    file_name = subtopic.lower().replace(" ", "_") + ".md"
+    subtopic = st.sidebar.radio("Select Topic", ["President of India", "Fundamental Rights", "Directive Principles"])
 elif subject == "Maths":
-    subtopic = st.sidebar.radio("Topic", ["Percentages", "Ratio and Proportion", "Profit and Loss"])
-    file_name = subtopic.lower().replace(" ", "_") + ".md"
+    subtopic = st.sidebar.radio("Select Topic", ["Percentages", "Ratio and Proportion", "Profit and Loss"])
 elif subject == "History":
-    subtopic = st.sidebar.radio("Topic", ["Indus Valley Civilization", "Mughal Empire", "Revolt of 1857"])
-    file_name = subtopic.lower().replace(" ", "_") + ".md"
+    subtopic = st.sidebar.radio("Select Topic", ["Indus Valley Civilization", "Vedic Period", "Mughal Empire"])
 else:
-    subtopic = st.sidebar.radio("Topic", ["GDP and National Income", "Inflation", "Banking"])
-    file_name = subtopic.lower().replace(" ", "_") + ".md"
+    subtopic = st.sidebar.radio("Select Topic", ["GDP Concepts", "Inflation", "Banking Sector"])
 
-# 3. Path Logic
-# Files must be inside 'content' folder on GitHub
-path = f"content/{file_name}"
+# Logic to find the file
+# This converts "President of India" to "president_of_india.md"
+filename = subtopic.lower().replace(" ", "_") + ".md"
+path = f"content/{filename}"
 
-st.subheader(f"📖 {subtopic}")
+# Main Display
+st.title(f"{subject}")
+st.subheader(f"📝 {subtopic}")
 st.divider()
 
-# 4. Display Content
 if os.path.exists(path):
     with open(path, "r") as f:
         st.markdown(f.read())
 else:
-    st.warning(f"File not found!")
-    st.info(f"To see notes here, create a file named `{file_name}` in your GitHub `content` folder.")
+    st.info(f"🚀 **Ready to add notes?** \n\n Create a file named `{filename}` inside your `content` folder on GitHub to see your notes here.")
+
+st.sidebar.divider()
+st.sidebar.caption("Last Updated: March 2026")
