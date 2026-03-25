@@ -12,7 +12,16 @@ st.sidebar.divider()
 st.sidebar.write(f"**{subject} Topics:**")
 
 if subject == "Polity":
-    subtopic = st.sidebar.radio("Select Topic", ["President of India", "Fundamental Rights", "Directive Principles"])
+    if subject == "Polity":
+    subtopic = st.sidebar.radio("Select Topic", [
+        "President of India", 
+        "Fundamental Rights", 
+        "Directive Principles",
+        "Preamble",
+        "Parliament",
+        "Emergency Provisions",
+        "Panchayati Raj"
+    ])
 elif subject == "Maths":
     subtopic = st.sidebar.radio("Select Topic", ["Percentages", "Ratio and Proportion", "Profit and Loss"])
 elif subject == "History":
