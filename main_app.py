@@ -52,28 +52,41 @@ else:
     st.info("Please ensure your folder on GitHub is named 'content' and contains the 'upsc' folder.")
 
 # --- The Quiz Section ---
+st.divider()
 st.subheader("📝 Quick Check")
+
+# Default values to prevent the "hidden text" bug
+q = "Who is the head of the Indian State?"
+options = ["President", "PM", "CJI", "Governor"]
+correct = "President"
+
 if subject == "Polity":
-    q = "Who administers the oath to the President?"
-    options = ["PM", "CJI", "VP", "Speaker"]
-    correct = "CJI"
-# ... (Maths and History logic stays the same) ...
-else:
-    q = "Who was the founder of Maurya Empire?"
+    q = "Who administers the oath to the President of India?"
+    options = ["Prime Minister", "Chief Justice of India", "Vice President", "Speaker"]
+    correct = "Chief Justice of India"
+elif subject == "Maths":
+    q = "What is 20% of 500?"
+    options = ["50", "100", "150", "200"]
+    correct = "100"
+elif subject == "History":
+    q = "Who was the founder of the Maurya Empire?"
     options = ["Ashoka", "Chandragupta Maurya", "Bindusara", "Chanakya"]
     correct = "Chandragupta Maurya"
 
-user_choice = st.radio("Your Answer:", options)
+# This line displays the question - make sure it is NOT indented inside the 'if'
+st.write(f"**Question:** {q}")
+
+user_choice = st.radio("Select your answer:", options)
 
 if st.button("Submit"):
     if user_choice == correct:
         st.balloons()
-        st.success("Correct!")
+        st.success("Correct! +10 Points")
         st.session_state.score += 10
         time.sleep(1)
         st.rerun()
     else:
-        st.error(f"Wrong! It was {correct}")
+        st.error(f"Wrong! The correct answer is {correct}.")
 
 # --- Daily News ---
 st.divider()
