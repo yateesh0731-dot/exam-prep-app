@@ -1,32 +1,38 @@
 import streamlit as st
 import os
 
-st.set_page_config(page_title="SSC & UPSC Notes", page_icon="📝")
+st.set_page_config(page_title="SSC & UPSC Vault", page_icon="📑", layout="wide")
 
 st.title("📚 Combined Study Vault 2026")
-st.sidebar.title("Navigation")
 
-# Simplified Selection
-subject = st.sidebar.radio("Select Subject", ["Polity", "Maths", "History", "Economy"])
+# 1. Select Main Subject
+subject = st.sidebar.selectbox("Select Subject", ["Polity", "Maths", "History", "Economy"])
 
-# Path Logic: Everything points to the same 'content' folder now
-file_map = {
-    "Polity": "polity.md",
-    "Maths": "maths.md",
-    "History": "history.md",
-    "Economy": "economy.md"
-}
+# 2. Define Subtopics for each Subject
+if subject == "Polity":
+    subtopic = st.sidebar.radio("Topic", ["President of India", "Fundamental Rights", "Fundamental Duties"])
+    file_name = subtopic.lower().replace(" ", "_") + ".md"
+elif subject == "Maths":
+    subtopic = st.sidebar.radio("Topic", ["Percentages", "Ratio and Proportion", "Profit and Loss"])
+    file_name = subtopic.lower().replace(" ", "_") + ".md"
+elif subject == "History":
+    subtopic = st.sidebar.radio("Topic", ["Indus Valley Civilization", "Mughal Empire", "Revolt of 1857"])
+    file_name = subtopic.lower().replace(" ", "_") + ".md"
+else:
+    subtopic = st.sidebar.radio("Topic", ["GDP and National Income", "Inflation", "Banking"])
+    file_name = subtopic.lower().replace(" ", "_") + ".md"
 
-# The app will now look in: content/polity.md, content/maths.md, etc.
-path = f"content/{file_map[subject]}"
+# 3. Path Logic
+# Files must be inside 'content' folder on GitHub
+path = f"content/{file_name}"
 
+st.subheader(f"📖 {subtopic}")
 st.divider()
 
+# 4. Display Content
 if os.path.exists(path):
     with open(path, "r") as f:
         st.markdown(f.read())
 else:
-    st.info(f"💡 Next Step: On GitHub, create a file named `{file_map[subject]}` inside the `content` folder.")
-
-st.sidebar.divider()
-st.sidebar.caption("Bengaluru Prep Mode: ON")
+    st.warning(f"File not found!")
+    st.info(f"To see notes here, create a file named `{file_name}` in your GitHub `content` folder.")
