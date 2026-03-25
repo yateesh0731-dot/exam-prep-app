@@ -21,10 +21,23 @@ col1.metric("Current Score", st.session_state.score)
 col2.metric("Target", exam_choice)
 
 # --- Logic to Load Notes ---
-folder_map = {
-    "UPSC Prelims": "upsc",
-    "SSC CGL": "ssc"
-}
+folder_map = {"UPSC Prelims": "upsc", "SSC CGL": "ssc"}
+sub_folder = folder_map[exam_choice]
+
+# This new logic picks the right file based on the subject
+if subject == "Polity":
+    file_name = "president_of_india.md"
+elif subject == "Maths":
+    file_name = "percentages.md"
+else:
+    file_name = "history_notes.md" # You can create this file later
+
+path = f"content/{sub_folder}/{subject.lower()}/{file_name}"
+
+notes_content = None
+if os.path.exists(path):
+    with open(path, "r") as f:
+        notes_content = f.read()
 
 # This part is now "smarter" about finding your folders
 sub_folder = folder_map[exam_choice]
