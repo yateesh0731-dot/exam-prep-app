@@ -1,35 +1,32 @@
 import streamlit as st
 import os
 
-# 1. Page Config
-st.set_page_config(page_title="My Exam Vault", page_icon="📖", layout="wide")
+st.set_page_config(page_title="SSC & UPSC Notes", page_icon="📝")
 
-# 2. Sidebar Navigation
-st.sidebar.title("📚 Study Vault")
-exam_choice = st.sidebar.selectbox("Exam Type", ["UPSC Prelims", "SSC CGL"])
-subject = st.sidebar.radio("Subject", ["Polity", "Maths", "History", "Economy"])
+st.title("📚 Combined Study Vault 2026")
+st.sidebar.title("Navigation")
 
-# 3. Simple Path Logic
-folder_map = {"UPSC Prelims": "upsc", "SSC CGL": "ssc"}
+# Simplified Selection
+subject = st.sidebar.radio("Select Subject", ["Polity", "Maths", "History", "Economy"])
+
+# Path Logic: Everything points to the same 'content' folder now
 file_map = {
-    "Polity": "president_of_india.md",
-    "Maths": "percentages.md",
-    "History": "history_notes.md"
+    "Polity": "polity.md",
+    "Maths": "maths.md",
+    "History": "history.md",
+    "Economy": "economy.md"
 }
 
-path = f"content/{folder_map[exam_choice]}/{subject.lower()}/{file_map[subject]}"
+# The app will now look in: content/polity.md, content/maths.md, etc.
+path = f"content/{file_map[subject]}"
 
-# 4. Main Display Area
-st.title(f"{subject} Notes")
-st.caption(f"Currently viewing: {exam_choice}")
 st.divider()
 
 if os.path.exists(path):
     with open(path, "r") as f:
         st.markdown(f.read())
 else:
-    st.info(f"📁 To add notes here, upload a file to GitHub at: `{path}`")
+    st.info(f"💡 Next Step: On GitHub, create a file named `{file_map[subject]}` inside the `content` folder.")
 
-# 5. Footer
 st.sidebar.divider()
-st.sidebar.info("Tip: Use the sidebar to switch between subjects instantly.")
+st.sidebar.caption("Bengaluru Prep Mode: ON")
