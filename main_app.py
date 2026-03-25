@@ -15,7 +15,6 @@ file_map = {
     "Polity": "president_of_india.md",
     "Maths": "percentages.md",
     "History": "history_notes.md"
-    "Economy": "economy_notes.md"
 }
 
 path = f"content/{folder_map[exam_choice]}/{subject.lower()}/{file_map[subject]}"
